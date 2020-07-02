@@ -1,0 +1,35 @@
+version: '3'
+services:
+  database:
+    build:
+      context: ./
+      dockerfile: ./db/Dockerfile_database
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./db/db_backup:/data/db
+    restart: "no"
+  api:
+    build:
+      context: ./
+      dockerfile: ./backend/Dockerfile_sheroa3
+    ports:
+      - "10079:10079"
+    volumes:
+      - ./backend:/sheroa3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1g"
+    links:
+      - database
+  # frontend:
+  #   build:
+  #     context: ./
+  #     dockerfile: ./frontend/Dockerfile_frontend
+  #   ports:
+  #     - "9099:8000"
+  #   volumes:
+  #     - ./frontend:/app
+  #   links:
+  #     - api
