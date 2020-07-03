@@ -13,6 +13,7 @@ from app.api import handle_error, validsign
 from app.common.result import falseReturn, trueReturn
 from app.models.User import User
 from app.util.auth import generate_jwt, verify_jwt
+from app.util.sheet import sheet
 
 auth_blueprint = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -49,10 +50,14 @@ def signin():
         'token': generate_jwt(user),
     })
 
-
 @handle_error
-@auth_blueprint.route('/valid_token', methods=['POST'])
-@validsign
-def verify():
-    return trueReturn({'user': g.user.get_base_info()}, "")
-
+@auth_blueprint.route('/import', methods=['POST'])
+def import_from_sheet():
+    if 'file' not in request.files:
+        return falseReturn(None, '无文件')
+    f = request.files['file']
+    if f.filename == '':
+        return falseReturn(None, '未选择上传')
+    else:
+        sheet(f)
+        return trueReturn()

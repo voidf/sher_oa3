@@ -5,7 +5,7 @@ from app import db
 
 
 def str2md5(str):
-    return hashlib.md5(hashlib.md5(str.encode('utf-8')).hexdigest().encode('utf-8')).hexdigest()
+    return hashlib.sha256(hashlib.sha256(str.encode('utf-8')).hexdigest().encode('utf-8')).hexdigest()
 
 
 class User(db.Document):
@@ -16,6 +16,7 @@ class User(db.Document):
     last_modify = db.DateTimeField()
     create_datetime = db.DateTimeField()
     password = db.StringField()
+    nickname = db.StringField()
     status = db.StringField(default='p')
 
     def set_password(self, password):
@@ -29,7 +30,19 @@ class User(db.Document):
         return User(name=name, user_id=user_id, 
                     password=str2md5(password), permission=permission, 
                     create_datetime=datetime.datetime.now(), last_modify=datetime.datetime.now()).save()
-    
+
+    def get_or_create(name, user_id, password, permission):
+        _t = User.objects(name=name,user_id=user_id,password=str2md5(password),permission=permission)
+        if any(_t):
+            return _t.first()
+        else:
+            return User(
+                name=name,
+                user_id=user_id, 
+                password=str2md5(password),
+                permission=permission
+            ).save()
+
     def get_base_info(self):
         return {
             "id": str(self.id),
