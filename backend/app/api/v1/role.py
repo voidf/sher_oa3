@@ -83,7 +83,7 @@ def rename_role():
 @verify_params(params=['id','permission','functions'])
 @validsign
 @validcall
-def rename_role():
+def modify_role():
     if g.user.restrict_permission(g.data['permission']):
         if g.user.restrict_functions(g.data['functions']):
             Role.get_by_id(g.data['id']).modify_permission(g.data['permission'])

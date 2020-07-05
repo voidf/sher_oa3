@@ -65,7 +65,7 @@ def rename_role():
 @mrole_blueprint.route('/modify', methods=['POST'])
 @verify_params(params=['id','permission','functions'])
 @validsign
-def rename_role():
+def modify_role():
     Role.get_by_id(g.data['id']).modify_permission(g.data['permission'])
     Role.get_by_id(g.data['id']).modify_functions(g.data['functions'])
     return trueReturn()
