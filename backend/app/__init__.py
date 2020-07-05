@@ -29,11 +29,31 @@ def create_app() -> Flask:
     # 分配路由
     from app.util.GreenPrint import GreenPrint
     from app.api.v1.auth import auth_blueprint
+    from app.api.v1.domain import domain_blueprint
+    from app.api.v1.user import user_blueprint
+    from app.api.v1.role import role_blueprint
+    from app.api.v1.initialize import initialize_blueprint
+
+    from app.api.v1.masteradmin.auth import mauth_blueprint
+    from app.api.v1.masteradmin.domain import mdomain_blueprint
+    from app.api.v1.masteradmin.user import muser_blueprint
+    from app.api.v1.masteradmin.role import mrole_blueprint
     # from app.api.v1.sign import sign
     # from app.api.v1.base_info import base_info
     # from app.api.v1.domain import domain
     api_v1 = GreenPrint('api', __name__, url_prefix='/api/v1')
     api_v1.register_blueprint(auth_blueprint)
+    api_v1.register_blueprint(domain_blueprint)
+    api_v1.register_blueprint(user_blueprint)
+    api_v1.register_blueprint(role_blueprint)
+    api_v1.register_blueprint(initialize_blueprint)
+
+    api_v1.register_blueprint(mauth_blueprint)
+    api_v1.register_blueprint(mdomain_blueprint)
+    api_v1.register_blueprint(muser_blueprint)
+    api_v1.register_blueprint(mrole_blueprint)
+    
+    
     # api_v1.register_blueprint(base_info)
     # api_v1.register_blueprint(domain)
 

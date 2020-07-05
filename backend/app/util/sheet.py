@@ -1,4 +1,5 @@
 from app.models.User import User
+from app.models.Domain import Domain
 import xlrd
 import datetime
 
@@ -27,9 +28,8 @@ class sheet():
         for i in range(1, team_info.nrows):
             cur_row = team_info.row(i)
             if cur_row[0].value !='':
-                User.get_or_create(
+                u = User.get_or_create(
                     name = self.read_cell(cur_row[0]),
                     user_id = self.read_cell(cur_row[1]),
-                    password = self.read_cell(cur_row[2]),
-                    permission = self.read_cell(cur_row[3])
+                    password = self.read_cell(cur_row[2])
                 )
