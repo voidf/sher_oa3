@@ -5,6 +5,7 @@ class UserBase(db.Document):
     name = db.StringField()
     last_modify = db.DateTimeField()
     create_datetime = db.DateTimeField()
+    meta = {'allow_inheritance': True}
 
     def rename(self,new_name):
         self.name = new_name
