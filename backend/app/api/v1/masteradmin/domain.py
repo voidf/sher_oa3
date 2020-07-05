@@ -16,7 +16,7 @@ from app.models.Domain import Domain
 from app.util.auth import generate_jwt, mverify_jwt
 from app.util.sheet import sheet
 
-mdomain_blueprint = Blueprint('domain', __name__, url_prefix='/masteradmin/domain')
+mdomain_blueprint = Blueprint('mdomain', __name__, url_prefix='/masteradmin/domain')
 
 
 @mdomain_blueprint.before_request

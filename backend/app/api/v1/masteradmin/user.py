@@ -17,7 +17,7 @@ from app.models.Role import Role
 from app.util.auth import generate_jwt, mverify_jwt
 from app.util.sheet import sheet
 
-muser_blueprint = Blueprint('user', __name__, url_prefix='/masteradmin/user')
+muser_blueprint = Blueprint('muser', __name__, url_prefix='/masteradmin/user')
 
 @muser_blueprint.before_request
 def before_request():
