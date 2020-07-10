@@ -1,5 +1,5 @@
 from app import db
-from app.models.User import User
+
 from app.util.time import get_beijing_time, get_time_range_by_day
 import datetime
 
@@ -9,6 +9,7 @@ class Sign(db.Document):
     create_datetime = db.DateTimeField()  # 签到时间
     typ = db.StringField()  # 签到类型，分为'n'正常签到和's'换班签到
     week = db.IntField()  # 签到周
+    from app.models.User import User
     user = db.ReferenceField(User,reverse_delete_rule=2)
 
     def create(user: User, typ: str, week: int) -> bool:
