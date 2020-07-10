@@ -1,6 +1,5 @@
 from app import db
 from app.models.User import User
-from app.util.time import get_beijing_time, get_time_range_by_day
 import datetime
 
 class Event(db.Document):
