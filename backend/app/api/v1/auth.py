@@ -47,9 +47,7 @@ def signin():
     name = g.data.get("username", "").strip()
     password = g.data.get("password", "")
     user = User.objects(user_id=name).first()
-    print(user.get_base_info())
-    print(password)
-    print(user.valid_password(password))
+
     if not user or not user.valid_password(password):
         return falseReturn(None, "用户名或密码有误")
     return trueReturn({

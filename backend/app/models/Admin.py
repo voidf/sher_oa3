@@ -32,3 +32,12 @@ class Admin(db.Document):
         self.server_starttime = t
         self.last_modify = datetime.datetime.now()
         return self.save()
+
+    def get_base_info(self):
+        return {
+            "id": str(self.id),
+            "user_id": self.user_id,
+            "last_modify": self.last_modify,
+            "create_datetime": self.create_datetime,
+            "server_starttime" : self.server_starttime
+        }

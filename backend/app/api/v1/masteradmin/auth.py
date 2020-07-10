@@ -47,5 +47,5 @@ def signin():
         return falseReturn(None, "用户名或密码有误")
     return trueReturn({
         'user': user.get_base_info(),
-        'token': generate_jwt(user),
+        'token': generate_jwt(user)
     })
