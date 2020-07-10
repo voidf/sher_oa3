@@ -4,8 +4,8 @@ from app.models.UserBase import UserBase
 
 class Domain(UserBase):
 
-    members = db.ListField(db.ReferenceField(User,reverse_delete_rule=1))
-    monitors = db.ListField(db.ReferenceField(User,reverse_delete_rule=1))
+    members = db.ListField(db.ReferenceField(User,reverse_delete_rule=4))
+    monitors = db.ListField(db.ReferenceField(User,reverse_delete_rule=4))
 
 
     def new_domain(name,owner:User): # 超管新建悬空域不走这里

@@ -17,6 +17,8 @@ from app.models.Domain import Domain
 from app.models.Admin import Admin
 from app.models.Role import Role
 
+from app import db
+
 initialize_blueprint = Blueprint('initialize', __name__, url_prefix='/initialize')
 
 
@@ -41,7 +43,6 @@ def initialize_instance():
     Role.new_role('成员',0)
     Role.new_role('部长',64,['new_user','remove_user','rename_user','edit_role','ls_user','import_from_sheet'])
     Role.new_role('总监',4096,['*'])
-
     with open('isinit.flag','w') as f:
         pass
     return trueReturn(msg="初始化完成")

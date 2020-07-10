@@ -5,3 +5,4 @@ flask_script
 uwsgi
 pyjwt
 xlrd
+diff-match-patch

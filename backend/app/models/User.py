@@ -2,6 +2,7 @@ import datetime
 import hashlib
 from app.models.UserBase import UserBase
 from app.models.Role import Role
+from app.models.Sign import Sign
 from app import db
 
 
@@ -15,15 +16,17 @@ class User(UserBase):
     password = db.StringField()
     nickname = db.StringField()
     status = db.StringField(default='p')
-    roles = db.ListField(db.ReferenceField(Role,reverse_delete_rule=1))
+    roles = db.ListField(db.ReferenceField(Role,reverse_delete_rule=4))
     """
     reverse_delete_rule ==> 引用对象被删除时：
     0：啥也不干
-    1：将所有对此的引用空化
-    2：删除引用此的文档（没试过但是我觉得是整个删除不是只删引用
+    1：将所有对此的引用空化(整个List都会被爆破)
+    2：删除引用此的文档（是整个删除不是只删引用
     3：如果有别的东西引用这个，阻止删除操作
-    4：从一个ListField拉取更新的引用（？
+    4：只对ListField套ReferenceField有用，两层List不行，表现与0相同；没有List套会报错；删除引用对象后如同.remove这个元素
     """
+
+    last_sign = db.ReferenceField(Sign,reverse_delete_rule=1)
 
     def set_password(self, password):
         self.password = str2md5(password)
