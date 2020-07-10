@@ -50,7 +50,7 @@ def before_request():
 
 @handle_error
 @msign_blueprint.route('/do', methods=['GET'])
-@validmsign
+@validsign
 def do_msign():  # shift改变排班的week只是记签到目的week，不作为判断是否允许签到的依据
     wk = int((datetime.datetime.now - Admin.objects().first().server_starttime).total_seconds()) % (86400*7)
     r = Routine.objects(user=g.user).first()
