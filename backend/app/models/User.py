@@ -9,6 +9,8 @@ from app import db
 def str2md5(str):
     return hashlib.sha256(hashlib.sha256(str.encode('utf-8')).hexdigest().encode('utf-8')).hexdigest()
 
+class User(UserBase):
+    pass
 
 class User(UserBase):
     user_id = db.StringField()
