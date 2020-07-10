@@ -4,7 +4,7 @@ from app.models.UserBase import UserBase
 from app.models.Role import Role
 
 from app import db
-
+import app.models.Sign
 
 def str2md5(str):
     return hashlib.sha256(hashlib.sha256(str.encode('utf-8')).hexdigest().encode('utf-8')).hexdigest()
@@ -26,7 +26,7 @@ class User(UserBase):
     4：只对ListField套ReferenceField有用，两层List不行，表现与0相同；没有List套会报错；删除引用对象后如同.remove这个元素
     """
     
-    last_sign = db.ReferenceField(Sign,reverse_delete_rule=1)
+    last_sign = db.ReferenceField(app.models.Sign.Sign,reverse_delete_rule=1)
 
     def set_password(self, password):
         self.password = str2md5(password)
@@ -104,4 +104,4 @@ class User(UserBase):
         }
 
 
-from app.models.Sign import Sign
+
