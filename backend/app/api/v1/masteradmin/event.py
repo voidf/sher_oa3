@@ -13,7 +13,6 @@ from app.api import handle_error, validsign, verify_params, validcall
 from app.common.result import falseReturn, trueReturn
 from app.models.User import User
 from app.models.Domain import Domain
-from app.models.Sign import Sign
 from app.models.Event import Event
 from app.models.Routine import Routine
 from app.models.Role import Role
