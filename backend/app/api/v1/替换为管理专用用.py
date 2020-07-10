@@ -13,12 +13,12 @@ ignore = {
 
 for _ in os.listdir():
     if _ not in ignore and _[-3:]=='.py':
-        _ = _[:-3]
         with open(_,'r',encoding='utf-8') as f:
             s = f.read()
-        s=s.replace(_,'m'+_)
+        __ = _[:-3]
+        s=s.replace(__,'m'+__)
         s=s.replace('verify_jwt','mverify_jwt')
-        s=s.replace('@validcall','')
+        s=s.replace('@validcall\n','')
         with open('masteradmin/'+_,'w',encoding='utf-8') as f:
             f.write(s)
 
