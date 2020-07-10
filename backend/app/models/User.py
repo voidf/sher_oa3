@@ -2,7 +2,7 @@ import datetime
 import hashlib
 from app.models.UserBase import UserBase
 from app.models.Role import Role
-from app.models.Sign import Sign
+
 from app import db
 
 
@@ -25,7 +25,7 @@ class User(UserBase):
     3：如果有别的东西引用这个，阻止删除操作
     4：只对ListField套ReferenceField有用，两层List不行，表现与0相同；没有List套会报错；删除引用对象后如同.remove这个元素
     """
-
+    from app.models.Sign import Sign
     last_sign = db.ReferenceField(Sign,reverse_delete_rule=1)
 
     def set_password(self, password):
