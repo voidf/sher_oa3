@@ -35,7 +35,7 @@ def before_request():
 
 
 @handle_error
-@initialize_blueprint.route('/', methods=['POST'])
+@initialize_blueprint.route('/exec', methods=['POST'])
 @verify_params(params=['user','password'])
 def initialize_instance():
     Admin.insert_admin(g.data['user'],g.data['password'])
