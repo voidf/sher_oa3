@@ -33,7 +33,7 @@ def mverify_jwt(token):
         payload = jwt.decode(token, current_app.config['JWT_SECRET'], algorithm=['HS256'])
         if payload['iat'] < time.time():
             return None, "登入超时"
-        user = User.objects(id=payload['id']).first()
+        user = Admin.objects(id=payload['id']).first()
         if not user:
             return None, "无此用户"
         return user, ""
