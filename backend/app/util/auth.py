@@ -3,6 +3,7 @@ import time
 
 from flask import current_app
 from app.models.User import User
+from app.models.Admin import Admin
 
 
 def generate_jwt(user):
@@ -32,10 +33,13 @@ def mverify_jwt(token):
     try:
         payload = jwt.decode(token, current_app.config['JWT_SECRET'], algorithm=['HS256'])
         if payload['iat'] < time.time():
+            print("登入超时")
             return None, "登入超时"
         user = Admin.objects(id=payload['id']).first()
         if not user:
+            print("无此用户")
             return None, "无此用户"
         return user, ""
     except:
+        print("数据错误")
         return None, "数据错误"
