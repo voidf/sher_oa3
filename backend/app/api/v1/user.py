@@ -83,7 +83,7 @@ def edit_role():
 @validsign
 @validcall
 def ls_user():
-    return trueReturn({'users':i.get_base_info() for i in User.objects()})
+    return trueReturn({'users':[i.get_base_info() for i in User.objects()]})
 
 @handle_error
 @user_blueprint.route('/import', methods=['POST'])

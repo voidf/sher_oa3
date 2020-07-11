@@ -73,7 +73,7 @@ def edit_role():
 @muser_blueprint.route('/ls', methods=['GET'])
 @validsign
 def ls_user():
-    return trueReturn({'users':i.get_base_info() for i in User.objects()})
+    return trueReturn({'users':[i.get_base_info() for i in User.objects()]})
 
 @handle_error
 @muser_blueprint.route('/import', methods=['POST'])
