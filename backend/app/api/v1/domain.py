@@ -41,7 +41,7 @@ def before_request():
 @verify_params(params=['name'])
 @validsign
 def new_domain():
-    Domain.new_domain(g.data['name'],None)
+    Domain.new_domain(g.data['name'],g.user)
     return trueReturn()
 
 @handle_error
