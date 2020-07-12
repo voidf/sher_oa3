@@ -73,20 +73,8 @@ def edit_domain():
     d.modify_members(g.data['members'],g.data['monitors'])
     return trueReturn()
 
-
 @handle_error
 @mdomain_blueprint.route('/ls', methods=['GET'])
 @validsign
 def ls_domain():
-    data = {'monitor':[],'member':[]}
-    for i in Domain.objects(monitors__in=[g.user]):
-        data['monitor'].append(i.get_json())
-    for i in Domain.objects(members__in=[g.user]):
-        data['members'].append(i.get_json())
-    return trueReturn(data)
-
-@handle_error
-@mdomain_blueprint.route('/show', methods=['GET'])
-@validsign
-def show_all_domain():
     return trueReturn({"domains":[i.get_json() for i in Domain.objects()]})
