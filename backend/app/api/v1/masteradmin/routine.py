@@ -66,7 +66,7 @@ def change_routine(): # 永久调班
     if int(g.data['signtime']) not in range(0,35):
         return falseReturn(msg='值班时间段设置不合法')
     u = User.get_by_id(g.data['user'])
-    Routine.objects(user=u).change_signtime(g.data['signtime'])
+    Routine.objects(user=u).first().change_signtime(g.data['signtime'])
     return trueReturn()
 
 @handle_error
