@@ -29,7 +29,7 @@ def before_request():
         if Authorization:
             token = Authorization
             g.token = token
-            g.role, msg = verify_jwt(token)
+            g.user, msg = verify_jwt(token)
         else:
             pass
     except:
