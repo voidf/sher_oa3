@@ -71,3 +71,8 @@ def edit_role():
     return trueReturn()
 
 
+@handle_error
+@role_blueprint.route('/ls', methods=['GET'])
+@validsign
+def ls_role():
+    return trueReturn({"roles":[i.get_base_info() for i in Role.objects()]})

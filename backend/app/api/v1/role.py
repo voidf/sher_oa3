@@ -95,3 +95,9 @@ def edit_role():
         return falseReturn(msg='您无法为角色分配不小于自身的权限')
 
 
+@handle_error
+@role_blueprint.route('/ls', methods=['GET'])
+@validsign
+@validcall
+def ls_role():
+    return trueReturn({"roles":[i.get_base_info() for i in Role.objects()]})
