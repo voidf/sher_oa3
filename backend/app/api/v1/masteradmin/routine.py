@@ -19,7 +19,7 @@ from app.models.Role import Role
 from app.util.auth import generate_jwt, mverify_jwt
 from app.util.sheet import sheet
 
-mroutine_blueprint = Blueprint('mroutine', __name__, url_prefix='/mroutine')
+mroutine_blueprint = Blueprint('mroutine', __name__, url_prefix='/masteradmin/routine')
 
 time_table = {
     0:range(28800,36000),
@@ -50,7 +50,7 @@ def before_request():
 @mroutine_blueprint.route('/init', methods=['POST'])
 @verify_params(params=['signtime'])
 @validsign
-def init_mroutine(): 
+def init_routine(): 
     if int(g.data['signtime']) not in range(0,35):
         return falseReturn(msg='值班时间段设置不合法')
     if Routine.init_routine(g.user,g.data['signtime']):
@@ -62,8 +62,7 @@ def init_mroutine():
 @mroutine_blueprint.route('/change', methods=['POST'])
 @verify_params(params=['user','signtime'])
 @validsign
-
-def change_mroutine(): # 永久调班
+def change_routine(): # 永久调班
     if int(g.data['signtime']) not in range(0,35):
         return falseReturn(msg='值班时间段设置不合法')
     u = User.get_by_id(g.data['user'])
@@ -74,7 +73,7 @@ def change_mroutine(): # 永久调班
 @mroutine_blueprint.route('/shift', methods=['POST'])
 @verify_params(params=['shift','shift_week'])
 @validsign
-def shift_mroutine(): # 临时调班
+def shift_routine(): # 临时调班
     if int(g.data['shift']) not in range(0,35):
         return falseReturn(msg='调班时间段设置不合法')
     if not Sign.objects(user=g.user,week=int(g.data['shift_week'])):
