@@ -84,9 +84,9 @@ def edit_domain():
 @domain_blueprint.route('/ls', methods=['GET'])
 @validsign
 def ls_domain():
-    data = {'monitor':[],'member':[]}
+    data = {'monitors':[],'members':[]}
     for i in Domain.objects(monitors__in=[g.user]):
-        data['monitor'].append(i.get_json())
+        data['monitors'].append(i.get_json())
     for i in Domain.objects(members__in=[g.user]):
         data['members'].append(i.get_json())
     return trueReturn(data)

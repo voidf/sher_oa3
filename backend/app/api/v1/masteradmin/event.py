@@ -75,7 +75,7 @@ def edit_event():
 @mevent_blueprint.route('/remove', methods=['POST'])
 @verify_params(params=['id'])
 @validsign
-def remove_event(): # 临时调班
+def remove_event():
     e = Event.get_by_id(g.data['id'])
     e.delete()
     return trueReturn()
