@@ -84,3 +84,9 @@ def ls_domain():
     for i in Domain.objects(members__in=[g.user]):
         data['members'].append(i.get_json())
     return trueReturn(data)
+
+@handle_error
+@domain_blueprint.route('/show', methods=['GET'])
+@validsign
+def show_all_domain():
+    return trueReturn({"domains":[i.get_json() for i in Domain.objects()]})

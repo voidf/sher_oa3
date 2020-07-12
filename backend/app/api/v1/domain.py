@@ -9,7 +9,7 @@ from flask import current_app as flaskapp
 from flask import g, jsonify, request
 from mongoengine.queryset.visitor import Q
 
-from app.api import handle_error, validsign, verify_params
+from app.api import handle_error, validsign, verify_params, validcall
 from app.common.result import falseReturn, trueReturn
 from app.models.User import User
 from app.models.Domain import Domain
@@ -90,3 +90,10 @@ def ls_domain():
     for i in Domain.objects(members__in=[g.user]):
         data['members'].append(i.get_json())
     return trueReturn(data)
+
+@handle_error
+@domain_blueprint.route('/show', methods=['GET'])
+@validsign
+@validcall
+def show_all_domain():
+    return trueReturn({"domains":[i.get_json() for i in Domain.objects()]})
