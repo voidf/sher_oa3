@@ -100,3 +100,9 @@ def set_starttime(): # 设置系统启动时间
 @validcall
 def ls_routine():
     return trueReturn({"routines":[i.get_base_info() for i in Routine.objects()]})
+
+@handle_error
+@routine_blueprint.route('/my', methods=['GET'])
+@validsign
+def my_routine():
+    return trueReturn({"routine":Routine.objects(user=g.user).first().get_base_info()]})
