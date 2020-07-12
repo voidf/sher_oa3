@@ -105,4 +105,4 @@ def ls_routine():
 @routine_blueprint.route('/my', methods=['GET'])
 @validsign
 def my_routine():
-    return trueReturn({"routine":Routine.objects(user=g.user).first().get_base_info()]})
+    return trueReturn({"routine":Routine.objects(user=g.user).first().get_base_info()})
