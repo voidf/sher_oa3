@@ -72,7 +72,7 @@ def edit_role():
 
 
 @handle_error
-@role_blueprint.route('/ls', methods=['GET'])
+@mrole_blueprint.route('/ls', methods=['GET'])
 @validsign
 def ls_role():
     return trueReturn({"roles":[i.get_base_info() for i in Role.objects()]})
