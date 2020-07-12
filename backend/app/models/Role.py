@@ -11,7 +11,7 @@ def str2md5(str):
 class Role(db.Document):
     permission = db.IntField()
     name = db.StringField()
-    allow_functions = db.ListField(db.StringField()，default=[])
+    allow_functions = db.ListField(db.StringField(),default=[])
 
     def new_role(name,permission):
         return Role(name=name,permission=permission).save()
