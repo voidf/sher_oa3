@@ -87,8 +87,13 @@ def shift_routine(): # 临时调班
 @mroutine_blueprint.route('/set_starttime', methods=['POST'])
 @verify_params(params=['time'])
 @validsign
-
 def set_starttime(): # 设置系统启动时间
     d = datetime.datetime.strptime('%Y/%m/%d %H:%M:%S')
     Admin.objects().first().change_starttime(d)
     return trueReturn()
+
+@handle_error
+@mroutine_blueprint.route('/ls', methods=['GET'])
+@validsign
+def ls_routine():
+    return trueReturn({"routines":[i.get_base_info() for i in Routine.objects()]})

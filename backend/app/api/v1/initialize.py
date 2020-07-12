@@ -41,7 +41,7 @@ def initialize_instance():
     Admin.insert_admin(g.data['user'],g.data['password'])
     Domain(name='默认部员域').save()
     Role.new_role('成员',0)
-    Role.new_role('部长',64,['new_user','remove_user','rename_user','alloc_role','ls_user','import_from_sheet'])
+    Role.new_role('部长',64,['new_user','remove_user','rename_user','alloc_user','ls_user','import_from_sheet'])
     Role.new_role('总监',4096,['*'])
     with open('isinit.flag','w') as f:
         pass

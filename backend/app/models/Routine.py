@@ -41,3 +41,11 @@ class Routine(db.Document):
         self.shift = int(shift)
         self.shift_week = int(shift_week)
         return self.save()
+
+    def get_base_info(self):
+        return {
+            "user":self.user,
+            "signtime":self.signtime,
+            "shift":self.shift,
+            "shift_week":self.shift_week
+        }

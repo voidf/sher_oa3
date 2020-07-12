@@ -93,3 +93,10 @@ def set_starttime(): # 设置系统启动时间
     d = datetime.datetime.strptime('%Y/%m/%d %H:%M:%S')
     Admin.objects().first().change_starttime(d)
     return trueReturn()
+
+@handle_error
+@routine_blueprint.route('/ls', methods=['GET'])
+@validsign
+@validcall
+def ls_routine():
+    return trueReturn({"routines":[i.get_base_info() for i in Routine.objects()]})
