@@ -51,7 +51,10 @@ def new_user():
 @validsign
 @validcall
 def remove_user():
-    User.get_by_id(g.data['id']).delete()
+    u = User.get_by_id(g.data['id'])
+    if not g.user.restrict_permission(u.max_permission()): 
+        return falseReturn(msg='您无法删除权限不小于自己的用户')
+    u.delete()
     return trueReturn()
 
 @handle_error
@@ -60,15 +63,18 @@ def remove_user():
 @validsign
 @validcall
 def rename_user():
-    User.get_by_id(g.data['id']).rename(g.data['name'])
+    u = User.get_by_id(g.data['id'])
+    if not g.user.restrict_permission(u.max_permission()): 
+        return falseReturn(msg='您无法重命名权限不小于自己的用户')
+    u.rename(g.data['name'])
     return trueReturn()
 
 @handle_error
-@user_blueprint.route('/edit_role', methods=['POST'])
+@user_blueprint.route('/alloc', methods=['POST'])
 @verify_params(params=['id','roles'])
 @validsign
 @validcall
-def edit_role():
+def alloc_user():
     for i in g.data['roles']:
         if not g.user.restrict_permission(Role.get_by_id(i).permission):
             return falseReturn(msg='您无法赋予他人权限不小于自己的角色')
@@ -89,7 +95,7 @@ def ls_user():
 @user_blueprint.route('/import', methods=['POST'])
 @validsign
 @validcall
-def import_from_sheet():
+def import_user():
     if 'file' not in request.files:
         return falseReturn(None, '无文件')
     f = request.files['file']

@@ -18,7 +18,7 @@ class User(UserBase):
     password = db.StringField()
     nickname = db.StringField()
     status = db.StringField(default='p')
-    roles = db.ListField(db.ReferenceField(Role,reverse_delete_rule=4))
+    roles = db.ListField(db.ReferenceField(Role,reverse_delete_rule=4),default=[])
     """
     reverse_delete_rule ==> 引用对象被删除时：
     0：啥也不干
@@ -54,15 +54,21 @@ class User(UserBase):
         self.roles = roles
         return self.save()
 
+    def max_permission(self) -> int:
+        mx = 0
+        for i in self.roles:
+            mx = max(mx,i.permission)
+        return mx
+
     def restrict_permission(self,permission:int) -> bool:
         """
         用来判断当前用户是否越权操作角色
         目前是 O(当前用户角色数) 的
         """
-        max_permission = 0
+        mx = 0
         for i in self.roles:
-            max_permission = max(max_permission,i.permission)
-        return max_permission > permission
+            mx = max(mx,i.permission)
+        return mx > permission
 
     def restrict_functions(self,functions:list) -> bool:
         """
@@ -151,7 +157,7 @@ class User(UserBase):
     password = db.StringField()
     nickname = db.StringField()
     status = db.StringField(default='p')
-    roles = db.ListField(db.ReferenceField(Role,reverse_delete_rule=4))
+    roles = db.ListField(db.ReferenceField(Role,reverse_delete_rule=4),default=[])
     """
     reverse_delete_rule ==> 引用对象被删除时：
     0：啥也不干
@@ -187,15 +193,21 @@ class User(UserBase):
         self.roles = roles
         return self.save()
 
+    def max_permission(self) -> int:
+        mx = 0
+        for i in self.roles:
+            mx = max(mx,i.permission)
+        return mx
+
     def restrict_permission(self,permission:int) -> bool:
         """
         用来判断当前用户是否越权操作角色
         目前是 O(当前用户角色数) 的
         """
-        max_permission = 0
+        mx = 0
         for i in self.roles:
-            max_permission = max(max_permission,i.permission)
-        return max_permission > permission
+            mx = max(mx,i.permission)
+        return mx > permission
 
     def restrict_functions(self,functions:list) -> bool:
         """

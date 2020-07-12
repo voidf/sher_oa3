@@ -62,10 +62,10 @@ def rename_role():
     return trueReturn()
 
 @handle_error
-@mrole_blueprint.route('/modify', methods=['POST'])
+@mrole_blueprint.route('/edit', methods=['POST'])
 @verify_params(params=['id','permission','functions'])
 @validsign
-def modify_role():
+def edit_role():
     Role.get_by_id(g.data['id']).modify_permission(g.data['permission'])
     Role.get_by_id(g.data['id']).modify_functions(g.data['functions'])
     return trueReturn()

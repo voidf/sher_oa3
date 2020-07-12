@@ -79,11 +79,11 @@ def rename_role():
         return falseReturn(msg='您无法为权限不小于自己的角色更名')
 
 @handle_error
-@role_blueprint.route('/modify', methods=['POST'])
+@role_blueprint.route('/edit', methods=['POST'])
 @verify_params(params=['id','permission','functions'])
 @validsign
 @validcall
-def modify_role():
+def edit_role():
     if g.user.restrict_permission(g.data['permission']):
         if g.user.restrict_functions(g.data['functions']):
             Role.get_by_id(g.data['id']).modify_permission(g.data['permission'])

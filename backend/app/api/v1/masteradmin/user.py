@@ -61,10 +61,10 @@ def rename_user():
     return trueReturn()
 
 @handle_error
-@muser_blueprint.route('/edit_role', methods=['POST'])
+@muser_blueprint.route('/alloc', methods=['POST'])
 @verify_params(params=['id','roles'])
 @validsign
-def edit_role():
+def alloc_user():
     u = User.get_by_id(g.data['id'])
     u.change_role(g.data['roles'])
     return trueReturn()
@@ -78,7 +78,7 @@ def ls_user():
 @handle_error
 @muser_blueprint.route('/import', methods=['POST'])
 @validsign
-def import_from_sheet():
+def import_user():
     if 'file' not in request.files:
         return falseReturn(None, '无文件')
     f = request.files['file']
