@@ -47,6 +47,18 @@ def before_request():
         return falseReturn(None, '数据错误')
 
 @handle_error
+@routine_blueprint.route('/init', methods=['POST'])
+@verify_params(params=['signtime'])
+@validsign
+def init_routine(): 
+    if int(g.data['signtime']) not in range(0,35):
+        return falseReturn(msg='值班时间段设置不合法')
+    if Routine.init_routine(g.user,g.data['signtime']):
+        return trueReturn()
+    else:
+        return falseReturn(msg='您已设置过签到时间')
+
+@handle_error
 @routine_blueprint.route('/change', methods=['POST'])
 @verify_params(params=['user','signtime'])
 @validsign
@@ -57,6 +69,20 @@ def change_routine(): # 永久调班
     u = User.get_by_id(g.data['user'])
     Routine.objects(user=u).first().change_signtime(g.data['signtime'])
     return trueReturn()
+
+@handle_error
+@routine_blueprint.route('/shift', methods=['POST'])
+@verify_params(params=['shift','shift_week'])
+@validsign
+def shift_routine(): # 临时调班
+    if int(g.data['shift']) not in range(0,35):
+        return falseReturn(msg='调班时间段设置不合法')
+    if not Sign.objects(user=g.user,week=int(g.data['shift_week'])):
+        r = Routine.objects(user=g.user).first()
+        r.change_shift(g.data['shift'],g.data['shift_week'])
+        return trueReturn()
+    else:
+        return falseReturn(msg='您已在此周签过到')
 
 @handle_error
 @routine_blueprint.route('/set_starttime', methods=['POST'])
