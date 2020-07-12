@@ -88,7 +88,7 @@ def shift_routine(): # 临时调班
 @verify_params(params=['time'])
 @validsign
 def set_starttime(): # 设置系统启动时间
-    d = datetime.datetime.strptime('%Y/%m/%d %H:%M:%S')
+    d = datetime.datetime.strptime(g.data['time'],'%Y/%m/%d %H:%M:%S')
     Admin.objects().first().change_starttime(d)
     return trueReturn()
 
