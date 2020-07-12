@@ -86,7 +86,7 @@ def ls_domain():
     return trueReturn(data)
 
 @handle_error
-@domain_blueprint.route('/show', methods=['GET'])
+@mdomain_blueprint.route('/show', methods=['GET'])
 @validsign
 def show_all_domain():
     return trueReturn({"domains":[i.get_json() for i in Domain.objects()]})
