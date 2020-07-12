@@ -9,7 +9,7 @@ class Domain(UserBase):
 
 
     def new_domain(name,owner:User): # 超管新建悬空域不走这里
-        return Domain(name=name,members=[owner.id],monitors=[owner.id]).save()
+        return Domain(name=name,members=[owner],monitors=[owner]).save()
 
     def insert_members(self,member_list):
         for _ in member_list:
