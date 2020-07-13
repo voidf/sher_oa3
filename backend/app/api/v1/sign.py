@@ -58,7 +58,7 @@ def do_sign():  # shift改变排班的week只是记签到目的week，不作为�
     m = ''
 
     if r.signtime != r.shift:  # 有调班:
-        if int((ima + 259200) % 604800 / 86400) == int(r.shift / 5) and ima % 86400 in time_table[r.shift % 5]:
+        if int((ima + 259200) % 604800 / 86400) == int(r.shift / 5) and int(ima % 86400) in time_table[r.shift % 5]:
             if not Sign.objects(user=g.user, week=r.shift_week):
                 if Sign.create(user=g.user, typ='s', week=r.shift_week):
                     r = r.recover_shift()
@@ -77,7 +77,7 @@ def do_sign():  # shift改变排班的week只是记签到目的week，不作为�
     print(ima % 86400)
     print(time_table[r.signtime % 5])
 
-    if int((ima + 259200) % 604800 / 86400) == int(r.signtime / 5) and ima % 86400 in time_table[r.signtime % 5]:
+    if int((ima + 259200) % 604800 / 86400) == int(r.signtime / 5) and int(ima % 86400) in time_table[r.signtime % 5]:
         if not Sign.objects(user=g.user, week=wk):
             if Sign.create(user=g.user, typ='n', week=wk):
                 return trueReturn()
