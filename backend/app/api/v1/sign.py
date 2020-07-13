@@ -65,25 +65,30 @@ def do_sign():  # shift改变排班的week只是记签到目的week，不作为�
                     return trueReturn()
                 else:
                     r = r.recover_shift()
-                    m = '本时间段内签过到'
+                    m = '【调班】本时间段内签过到'
             else:
                 r = r.recover_shift()
-                m = '本周已签过到'
+                m = '【调班】本周已签过到'
         else:
-            m = '不在签到时段内'
+            m = '【调班】不在签到时段内'
     
     print(int((ima + 259200) % 604800 / 86400) == int(r.signtime / 5))
     print(ima % 86400 in time_table[r.signtime % 5])
+    print(ima % 86400)
+    print(time_table[r.signtime % 5])
 
     if int((ima + 259200) % 604800 / 86400) == int(r.signtime / 5) and ima % 86400 in time_table[r.signtime % 5]:
         if not Sign.objects(user=g.user, week=wk):
             if Sign.create(user=g.user, typ='n', week=wk):
                 return trueReturn()
             else:
-                return falseReturn(msg='本时间段内签过到')
+                m+='\n【正常班次】本时间段内签过到'
+                return falseReturn(msg=m)
         else:
-            return falseReturn(msg='本周已签过到')
+            m+='\n【正常班次】本周已签过到'
+            return falseReturn(msg=m)
     else:
+        m+='\n【正常班次】不在签到时段内'
         return falseReturn(msg=m)
     
 
