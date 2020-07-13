@@ -49,48 +49,6 @@ def before_request():
 
 
 @handle_error
-@msign_blueprint.route('/do', methods=['GET'])
-@validsign
-def do_msign():  # shift改变排班的week只是记签到目的week，不作为判断是否允许签到的依据
-    wk = int((datetime.datetime.now() - Admin.objects().first().server_starttime).total_seconds()) % (86400*7)
-    r = Routine.objects(user=g.user).first()
-    ima = datetime.datetime.now().timestamp() + 28800
-
-    if r.signtime == r.shift:  # 没有调班
-        if int((ima + 259200) % 604800 / 86400) == int(r.signtime / 5) and ima % 86400 in time_table[r.signtime % 5]:
-            if not Sign.objects(user=g.user, week=wk):
-                if Sign.create(user=g.user, typ='n', week=wk):
-                    return trueReturn()
-                else:
-                    return falseReturn(msg='本时间段内签过到')
-            else:
-                return falseReturn(msg='本周已签过到')
-        else:
-            return falseReturn(msg='不在签到时段内')
-    else:
-        if int((ima + 259200) % 604800 / 86400) == int(r.shift / 5) and ima % 86400 in time_table[r.shift % 5]:
-            if not Sign.objects(user=g.user, week=r.shift_week):
-                if Sign.create(user=g.user, typ='s', week=r.shift_week):
-                    r = r.recover_shift()
-                    return trueReturn()
-                else:
-                    r = r.recover_shift()
-                    return falseReturn(msg='本时间段内签过到')
-            else:
-                r = r.recover_shift()
-                return falseReturn(msg='本周已签过到')
-        else:
-            return falseReturn(msg='不在签到时段内')
-
-
-@handle_error
-@msign_blueprint.route('/ls', methods=['GET'])
-@validsign
-def ls_msign():
-    return trueReturn({'signs': [i.get_base_info() for i in Sign.objects(user=g.user)]})
-
-
-@handle_error
 @msign_blueprint.route('/export', methods=['GET'])
 @validsign
 def export_msign():
