@@ -19,7 +19,7 @@ from app.models.Role import Role
 from app.util.auth import generate_jwt, mverify_jwt
 from app.util.sheet import sheet
 
-msign_blueprint = Blueprint('msign', __name__, url_prefix='/msign')
+msign_blueprint = Blueprint('msign', __name__, url_prefix='/masteradmin/sign')
 
 time_table = {
     0: range(28800, 36000),
