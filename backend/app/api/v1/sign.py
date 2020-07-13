@@ -72,10 +72,10 @@ def do_sign():  # shift改变排班的week只是记签到目的week，不作为�
         else:
             m = '【调班】不在签到时段内'
     
-    print(int((ima + 259200) % 604800 / 86400) == int(r.signtime / 5))
-    print(ima % 86400 in time_table[r.signtime % 5])
-    print(ima % 86400)
-    print(time_table[r.signtime % 5])
+    # print(int((ima + 259200) % 604800 / 86400) == int(r.signtime / 5))
+    # print(ima % 86400 in time_table[r.signtime % 5])
+    # print(ima % 86400)
+    # print(time_table[r.signtime % 5])
 
     if int((ima + 259200) % 604800 / 86400) == int(r.signtime / 5) and int(ima % 86400) in time_table[r.signtime % 5]:
         if not Sign.objects(user=g.user, week=wk):
