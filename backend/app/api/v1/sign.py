@@ -55,7 +55,7 @@ def do_sign():  # shift改变排班的week只是记签到目的week，不作为�
     wk = int((datetime.datetime.now() - Admin.objects().first().server_starttime).total_seconds()) % (86400*7)
     r = Routine.objects(user=g.user).first()
     ima = datetime.datetime.now().timestamp() + 28800
-    m = ''
+    m = []
 
     if r.signtime != r.shift:  # 有调班:
         if int((ima + 259200) % 604800 / 86400) == int(r.shift / 5) and int(ima % 86400) in time_table[r.shift % 5]:
@@ -65,12 +65,12 @@ def do_sign():  # shift改变排班的week只是记签到目的week，不作为�
                     return trueReturn()
                 else:
                     r = r.recover_shift()
-                    m = '【调班】本时间段内签过到'
+                    m.append('【调班】本时间段内签过到')
             else:
                 r = r.recover_shift()
-                m = '【调班】本周已签过到'
+                m.append('【调班】本周已签过到')
         else:
-            m = '【调班】不在签到时段内'
+            m.append('【调班】不在签到时段内')
     
     # print(int((ima + 259200) % 604800 / 86400) == int(r.signtime / 5))
     # print(ima % 86400 in time_table[r.signtime % 5])
@@ -82,14 +82,14 @@ def do_sign():  # shift改变排班的week只是记签到目的week，不作为�
             if Sign.create(user=g.user, typ='n', week=wk):
                 return trueReturn()
             else:
-                m+='\n【正常班次】本时间段内签过到'
-                return falseReturn(msg=m)
+                m.append('【正常班次】本时间段内签过到')
+                return falseReturn(msg='\n'.join(m))
         else:
-            m+='\n【正常班次】本周已签过到'
-            return falseReturn(msg=m)
+            m.append('【正常班次】本周已签过到')
+            return falseReturn(msg='\n'.join(m))
     else:
-        m+='\n【正常班次】不在签到时段内'
-        return falseReturn(msg=m)
+        m.append('【正常班次】不在签到时段内')
+        return falseReturn(msg='\n'.join(m))
     
 
 
