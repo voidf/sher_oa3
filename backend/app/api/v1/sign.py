@@ -55,19 +55,9 @@ def do_sign():  # shift改变排班的week只是记签到目的week，不作为�
     wk = int((datetime.datetime.now() - Admin.objects().first().server_starttime).total_seconds()) % (86400*7)
     r = Routine.objects(user=g.user).first()
     ima = datetime.datetime.now().timestamp() + 28800
+    m = ''
 
-    if r.signtime == r.shift:  # 没有调班
-        if int((ima + 259200) % 604800 / 86400) == int(r.signtime / 5) and ima % 86400 in time_table[r.signtime % 5]:
-            if not Sign.objects(user=g.user, week=wk):
-                if Sign.create(user=g.user, typ='n', week=wk):
-                    return trueReturn()
-                else:
-                    return falseReturn(msg='本时间段内签过到')
-            else:
-                return falseReturn(msg='本周已签过到')
-        else:
-            return falseReturn(msg='不在签到时段内')
-    else:
+    if r.signtime != r.shift:  # 有调班:
         if int((ima + 259200) % 604800 / 86400) == int(r.shift / 5) and ima % 86400 in time_table[r.shift % 5]:
             if not Sign.objects(user=g.user, week=r.shift_week):
                 if Sign.create(user=g.user, typ='s', week=r.shift_week):
@@ -75,12 +65,27 @@ def do_sign():  # shift改变排班的week只是记签到目的week，不作为�
                     return trueReturn()
                 else:
                     r = r.recover_shift()
-                    return falseReturn(msg='本时间段内签过到')
+                    m = '本时间段内签过到'
             else:
                 r = r.recover_shift()
-                return falseReturn(msg='本周已签过到')
+                m = '本周已签过到'
         else:
-            return falseReturn(msg='不在签到时段内')
+            m = '不在签到时段内'
+    
+    print(int((ima + 259200) % 604800 / 86400) == int(r.signtime / 5))
+    print(ima % 86400 in time_table[r.signtime % 5])
+
+    if int((ima + 259200) % 604800 / 86400) == int(r.signtime / 5) and ima % 86400 in time_table[r.signtime % 5]:
+        if not Sign.objects(user=g.user, week=wk):
+            if Sign.create(user=g.user, typ='n', week=wk):
+                return trueReturn()
+            else:
+                return falseReturn(msg='本时间段内签过到')
+        else:
+            return falseReturn(msg='本周已签过到')
+    else:
+        return falseReturn(msg=m)
+    
 
 
 @handle_error
