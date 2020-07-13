@@ -121,7 +121,7 @@ class Sign(db.Document):
         print(user)
         if user.last_sign:
             if int(user.last_sign.create_datetime.timestamp() / 7200) != int(datetime.datetime.now().timestamp() / 7200):  # 卡两个小时内多次签到的情况
-                s = Sign(user=user,create_datetime=datetime.datetime.now(),
+                s = Sign(user=user.id,create_datetime=datetime.datetime.now(),
                          typ=typ, week=week)
                 user.last_sign = s
                 s.save()
@@ -130,7 +130,7 @@ class Sign(db.Document):
             else:
                 return False
         else:
-            s = Sign(user=user,create_datetime=datetime.datetime.now(),
+            s = Sign(user=user.id,create_datetime=datetime.datetime.now(),
                      typ=typ, week=week)
             user.last_sign = s
             s.save()
