@@ -51,5 +51,5 @@ def before_request():
 @handle_error
 @msign_blueprint.route('/export', methods=['GET'])
 @validsign
-def export_msign():
+def export_sign():
     return trueReturn({'all_signs': [{'user': j, 'signs': [i.get_base_info() for i in Sign.objects(user=j)]} for j in User.objects()]})
