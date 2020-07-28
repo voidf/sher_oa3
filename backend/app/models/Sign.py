@@ -2,7 +2,7 @@ import datetime
 import hashlib
 from app.models.UserBase import UserBase
 from app.models.Role import Role
-
+from app.models.User import User
 from app import db
 
 class Sign(db.Document):
