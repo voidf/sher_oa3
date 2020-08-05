@@ -6,7 +6,7 @@
 > -  (待定)  
 ### 基础功能  
   - 用户系统  
-    - [ ] 登入登出  
+    - [x] 登入登出  
     - [ ] 修改信息  
     - [ ] 权限系统  
   - 签到系统  
@@ -25,7 +25,13 @@
     - [ ] 权限  
   - [ ] 财务报表  
   - [ ] 打分  
-  - [ ] 网盘  
+
+- 模板库 
+  - [ ] 存文本
+  - [ ] 设置共享范围
+  - [ ] 标签分类
+
+- [ ] 物资管理
 
 
 ## 技术方案
@@ -58,6 +64,15 @@ cd /var
 git clone https://github.com/Gengxin-Zhang/sher_oa3.git
 cd sher_oa3
 sudo docker-compose up
+
+#安装Node.js
+sudo apt install -y nodejs npm
+cd frontend
+sudo npm install -g n
+n 10.15.3
+apt remove --purge nodejs
+apt install -y nodejs
+npm -g install npm@6.13.0
 
 #配置Nginx
 mkdir /var/log
